@@ -22,3 +22,6 @@ python subject_data.py -output_path "NEW_FILE" -subject_path "subjects" -inputs 
   python subject_timeseries.py -path_dir "NEW_FILE" -subject_path "icustays" -output_path "subjects_timeseries" -cohort_path "EPISODES_SUBJECTS" -hrs_data_min 0 -hrs_data_max 47
 
 Overall Script's time execution : 7:41:26
+
+Link to Subjects medical notes
+https://drive.google.com/drive/folders/1vO8JToP8HfnVSl6TpfiwAMdvdow7b9bz?usp=drive_link
