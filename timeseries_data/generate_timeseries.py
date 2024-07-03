@@ -211,13 +211,12 @@ def discretized_events_to_timeseries(timeseries_data, interval_max_data=None, va
     episode_timeseries = episode_timeseries.groupby(["HOURS"],
                                                     as_index=False, dropna=False).agg(aggregates_func_var)
     episode_timeseries.set_index('HOURS', inplace=True)
-    #
     features_all = episode_timeseries.columns.to_list()
     for feature_used in features_all:
         episode_timeseries.loc[episode_timeseries[feature_used] == 0, feature_used] = np.nan
     # Gcs_Eyes,Gcs_Motor, Gcs_Verbal , 'Po2', 'Fio2'
     episode_timeseries = episode_timeseries.astype(float)
-    episode_timeseries = episode_timeseries[var_cohort]
+    # episode_timeseries = episode_timeseries[var_cohort]
     episode_timeseries["Pao2_Fio2"] = episode_timeseries.apply(lambda e: round(100 * (e['Po2'] / e['Fio2']), 2), axis=1)
     episode_timeseries['Gcs_Score'] = episode_timeseries[["Gcs_Eyes", "Gcs_Motor", "Gcs_Verbal"]].values.sum(1)
     episode_timeseries = episode_timeseries.loc[:, episode_timeseries.columns.notna()]
@@ -239,17 +238,11 @@ def process_subject(notes, subject, subjects_root, output_dir, no_events, lock, 
             no_events.value += 1
             pass
     else:
-        # print(subject)
         subject_all_events, all_events, episodes, data_features_stats, stats_data = convert_events_to_timeseries(events)
-        # print("..........................")
-        # transform irregular timeseries to regular timeseries
-        # print(subject)
         episodes_timeseries = discretized_events_to_timeseries(episodes, interval_max_data=hrs_data_max + 1)
-        # print(episodes_timeseries.shape)
         episodes_timeseries_masked = np.where((pd.isnull(episodes_timeseries.values)), 0, 1)
         # masking vector for episode timeseries for generating time delta
         masked_timeseries = np.where((pd.isnull(episodes_timeseries.values)), np.nan, 0)
-        # elasped_time_masked_timeseries = np.where((pd.isnull(episodes_timeseries.values)), np.nan, 0)
         masked_episode_timeseries = pd.DataFrame(masked_timeseries,
                                                  columns=episodes_timeseries.columns.to_list())
         ep_timeseries_for_imp, time_elasped_episode_timeseries = forward_with_last_measured_value_with_time_elasped_interval(
