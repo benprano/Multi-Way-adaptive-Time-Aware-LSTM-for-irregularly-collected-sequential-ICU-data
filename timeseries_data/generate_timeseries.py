@@ -221,7 +221,6 @@ def discretized_events_to_timeseries(timeseries_data, interval_max_data=None, va
     episode_timeseries['Gcs_Score'] = episode_timeseries[["Gcs_Eyes", "Gcs_Motor", "Gcs_Verbal"]].values.sum(1)
     episode_timeseries = episode_timeseries.loc[:, episode_timeseries.columns.notna()]
     episode_timeseries = episode_timeseries.reindex(sorted(episode_timeseries.columns), axis=1)
-    # print(len(episode_timeseries.columns), episode_timeseries.columns.to_list())
     return episode_timeseries
 
 
