@@ -13,7 +13,7 @@ class PrepareData:
         self.batch_size = batch_size
         self.n_folds = n_folds
         self.test_size = test_size
-        self.task = task
+        self.task = task # Ture ---> Classification Else ---> Regression
         self.test_data_loader = []
         self.train_data_loader = []
         self.valid_data_loader = []
@@ -67,7 +67,7 @@ class PrepareData:
             if self.task:
                 self.sss.get_n_splits(x_train, y_train)
                 train_in_index, val_index = next(self.sss.split(x_train, y_train))
-                # Training data
+                # Training data & Validation data
                 x_train_in, x_val_in = x_train[train_in_index], x_train[val_index]
                 x_train_in_t, x_val_in_t = x_train_t[train_in_index], x_train_t[val_index]
                 x_train_in_last, x_val_in_last = x_train_last[train_in_index], x_train_last[val_index]
@@ -87,7 +87,7 @@ class PrepareData:
             else:
                 self.ts.get_n_splits(x_train, y_train)
                 train_in_index, val_index = next(self.ts.split(x_train, y_train))
-                # Training data
+                # Training data & Validation data
                 x_train_in, x_val_in = x_train[train_in_index], x_train[val_index]
                 x_train_in_t, x_val_in_t = x_train_t[train_in_index], x_train_t[val_index]
                 x_train_in_last, x_val_in_last = x_train_last[train_in_index], x_train_last[val_index]
