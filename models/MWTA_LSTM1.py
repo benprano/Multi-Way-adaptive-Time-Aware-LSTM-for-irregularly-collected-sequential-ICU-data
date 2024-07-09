@@ -157,8 +157,8 @@ class TimeLSTM(nn.Module):
 
     def forward(self, historic_features, timestamp, last_features, features_freqs, is_test=False):
         # Temporal features embedding
-        # outputs, prev_hidden = self.amita_2i_lstm(historic_features, timestamp, last_features, features_freqs)
-        outputs, prev_hidden = self.amita_2i_lstm(historic_features, timestamp)
+        # outputs, prev_hidden = self.mwta_lstm(historic_features, timestamp, last_features, features_freqs)
+        outputs, prev_hidden = self.mwta_lstm(historic_features, timestamp)
         if is_test:
             return prev_hidden, outputs
         else:
