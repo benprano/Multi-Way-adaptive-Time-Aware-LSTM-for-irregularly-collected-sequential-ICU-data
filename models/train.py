@@ -73,7 +73,7 @@ class TrainerHelpers:
 
     def train_model(self, model, train_dataloader):
         model.train()
-        running_loss, running_corrects, mae_train = 0.0, 0, 0
+        running_loss, running_corrects = 0.0, 0.0
         for bi, inputs in enumerate(tqdm(train_dataloader, total=len(train_dataloader), leave=False)):
             temporal_features, timestamp, last_data, data_freqs, labels = inputs
             temporal_features = temporal_features.to(torch.float32).to(self.device)
@@ -95,7 +95,7 @@ class TrainerHelpers:
 
     def valid_model(self, model, valid_dataloader):
         model.eval()
-        running_loss, running_corrects, mae_val = 0.0, 0, 0
+        running_loss, running_corrects = 0.0, 0.0
         fin_targets, fin_outputs = [], []
         for bi, inputs in enumerate(tqdm(valid_dataloader, total=len(valid_dataloader), leave=False)):
             temporal_features, timestamp, last_data, data_freqs, labels = inputs
