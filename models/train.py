@@ -221,14 +221,3 @@ class TrainerHelpers:
             adj_r2 = self.adjusted_r2(targets_y_true, targets_y_pred, n, self.input_dim)
             scores.append([rmse, mae, r2, adj_r2])
         return scores
-
-    def metrics_reg_imp(self, real, imputed):
-        scores = []
-        for y_true, y_pred, in zip(real, imputed):
-            rmse = np.sqrt(mean_squared_error(y_true, y_pred))
-            mae = mean_absolute_error(y_true, y_pred)
-            r2 = r2_score(y_true, y_pred)
-            n = y_true.shape[0]
-            adj_r2 = self.adjusted_r2(y_true, y_pred, n, self.input_dim)
-            scores.append([rmse, mae, r2, adj_r2])
-        return scores
